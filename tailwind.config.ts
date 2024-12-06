@@ -10,9 +10,18 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Kodchasan', 'sans-serif'], 
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        backgroundPurple: "#7474A0",
+        backgroundGray: "#E9E9E9", 
+        buttonBlue: "#475792", 
+        "8282A9": "#8282A9",
+        foreground: "var(--foreground)", 
+      },
+      borderRadius: {
+        lg: "12px", 
       },
     },
   },
