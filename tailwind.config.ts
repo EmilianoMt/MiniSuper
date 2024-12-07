@@ -11,7 +11,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Kodchasan', 'sans-serif'], 
+        kodschasan: ['Kodchasan', 'sans-serif'], 
       },
       colors: {
         backgroundPurple: "#7474A0",

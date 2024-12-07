@@ -3,13 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation"; 
 
-export default function FormularioRecarga({ logo }) {
+export default function FormularioRecarga({ logo, operador }:{ logo: string, operador: string }) {
   const [numero, setNumero] = useState("");
   const [monto, setMonto] = useState(null);
   const [error, setError] = useState({ numero: false, monto: false }); 
   const router = useRouter(); 
 
-  const handleNumeroChange = (e) => {
+  const handleNumeroChange = (e: any) => {
     const value = e.target.value;
     if (/^\d{0,10}$/.test(value)) {
       setNumero(value);
@@ -17,7 +17,7 @@ export default function FormularioRecarga({ logo }) {
     }
   };
 
-  const handleMontoChange = (selectedMonto) => {
+  const handleMontoChange = (selectedMonto:any) => {
     setMonto(selectedMonto);
     setError((prev) => ({ ...prev, monto: false })); 
   };
@@ -36,7 +36,6 @@ export default function FormularioRecarga({ logo }) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-backgroundGray">
-      {/* Logo */}
       <img
         src={logo}
         alt="Logo"
@@ -56,7 +55,6 @@ export default function FormularioRecarga({ logo }) {
         className={`mt-6 mb-6 p-4 w-full max-w-md border rounded-lg text-xl font-sans text-8282A9 placeholder-8282A9 focus:outline-none focus:ring-2 focus:ring-8282A9 focus:border-8282A9 ${
           error.numero ? "border-red-500" : "border-8282A9"
         }`}
-        maxLength="10"
       />
 
       <h2 className="text-8282A9 font-sans text-2xl mb-6">
