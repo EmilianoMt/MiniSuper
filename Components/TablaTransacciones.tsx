@@ -20,6 +20,7 @@ const columns = [
   { key: "monto", label: "Monto" },
   { key: "numeroCliente", label: "Número" },
   { key: "estado", label: "Estado" },
+  { key: "comision", label: "Comisión" },
 ];
 
 export default function TablaTransacciones({ transacciones }: TablaTransaccionesProps) {

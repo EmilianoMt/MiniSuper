@@ -1,4 +1,4 @@
-import { API_MOVISTAR, API_TELCEL } from "@/actions/Constants/constants";
+import { API_ATT, API_MOVISTAR, API_TELCEL } from "@/actions/Constants/constants";
 import TablaTransacciones from "@/Components/TablaTransacciones";
 import Link from "next/link";
 
@@ -17,22 +17,35 @@ export default async function HistorialRecargas() {
   });
   const responseRecargasM = await recargasMovistar.json();
 
+  const responseRecargasATT = await fetch(`${API_ATT}/transacciones`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const responseRecargasAT = await responseRecargasATT.json();
+  
   const DatosEstandarizados = (data: any, source: string) => {
-    return data.map((item: any) => ({
-      id: item.id || item._id,
-      fecha: item.fecha || item.fecha_hora,
-      compañia: item.compañia || item.conpañia,
-      monto: item.monto,
-      numeroCliente: item.numeroCliente || item.numero_cliente,
-      estado: item.estado,
-      source: source,
-    }));
+    return data.map((item: any) => {
+      const monto = item.monto || item.cantidad;
+      const comision = monto * 0.05;
+      return {
+        id: item.id || item._id,
+        fecha: item.fecha || item.fecha_hora,
+        compañia: item.compañia || item.conpañia || item.compania,
+        monto: monto,
+        comision: comision,
+        numeroCliente: item.numeroCliente || item.numero_cliente || item.numero,
+        estado: item.estado,
+        source: source,
+      };
+    });
   };
 
   const EstandarRecargasT = DatosEstandarizados(responseRecargasT, "Telcel");
   const EstandarRecargasM = DatosEstandarizados(responseRecargasM, "Movistar");
+  const EstandarRecargasAT = DatosEstandarizados(responseRecargasAT, "AT&T");
 
-  const responseRecargas = EstandarRecargasT.concat(EstandarRecargasM);
+  const responseRecargas = EstandarRecargasT.concat(EstandarRecargasM, EstandarRecargasAT);
 
   return (
     <div className="flex flex-col items-center w-screen h-screen bg-slate-100">
