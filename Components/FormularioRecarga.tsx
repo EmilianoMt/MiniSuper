@@ -1,28 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
+import { Alert } from "@nextui-org/react";
 
-export default function FormularioRecarga({ logo, operador }:{ logo: string, operador: string }) {
+export default function FormularioRecarga({ logo, operador, hacerRecarga }:{ logo: string, operador: string, hacerRecarga: (numero: number, monto: number) => Promise<void> }) {
   const [numero, setNumero] = useState("");
   const [monto, setMonto] = useState(null);
-  const [error, setError] = useState({ numero: false, monto: false }); 
-  const router = useRouter(); 
+  const [error, setError] = useState({ numero: false, monto: false });
+  const [alertVisible, setAlertVisible] = useState(false);
+  const router = useRouter();
 
   const handleNumeroChange = (e: any) => {
     const value = e.target.value;
     if (/^\d{0,10}$/.test(value)) {
       setNumero(value);
-      setError((prev) => ({ ...prev, numero: false })); 
+      setError((prev) => ({ ...prev, numero: false }));
     }
   };
 
-  const handleMontoChange = (selectedMonto:any) => {
+  const handleMontoChange = (selectedMonto: any) => {
     setMonto(selectedMonto);
-    setError((prev) => ({ ...prev, monto: false })); 
+    setError((prev) => ({ ...prev, monto: false }));
   };
 
-  const handleAceptar = () => {
+  const handleAceptar = async () => {
     if (!numero || !monto) {
       setError({
         numero: !numero,
@@ -30,18 +32,32 @@ export default function FormularioRecarga({ logo, operador }:{ logo: string, ope
       });
       return;
     }
-    alert(`Número: ${numero}\nMonto: ${monto}\n\nRECARGA REALIZADA`);
-    router.back(); 
+    await hacerRecarga(Number(numero), Number(monto));
+    setAlertVisible(true);
+    setTimeout(() => {
+      setAlertVisible(false);
+      router.push('/seleccionar-compania');
+    }, 3000);
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-backgroundGray">
+            {alertVisible && (
+        <div className="flex items-center justify-center w-[45vh]">
+          <Alert
+            description="Recarga realizada"
+            title="¡Éxito!"
+            color="success"
+            variant="faded"
+          />
+        </div>
+      )}
+
       <img
         src={logo}
         alt="Logo"
         className="w-72 object-contain rounded-lg mt-4 mb-12"
       />
-
 
       <h2 className="text-8282A9 font-sans text-2xl mt-6">
         Ingresa el número de teléfono a recargar
@@ -93,6 +109,8 @@ export default function FormularioRecarga({ logo, operador }:{ logo: string, ope
           Cancelar
         </button>
       </div>
+
+
     </div>
   );
 }

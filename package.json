@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@fontsource/kodchasan": "^5.1.0",
-    "@nextui-org/react": "^2.4.8",
+    "@nextui-org/react": "^2.6.4",
     "framer-motion": "^11.13.1",
     "next": "15.0.3",
     "react": "^18.0.0",
