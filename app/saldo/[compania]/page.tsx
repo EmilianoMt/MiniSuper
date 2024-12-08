@@ -1,6 +1,7 @@
 import buscarUsuarioMovistar from "@/actions/movistar/find";
 import buscarUsuarioTelcel from "@/actions/telcel/find";
 import FormularioSaldo from "@/Components/FormularioSaldo";
+import buscarUsuarioAtt from "@/actions/AT&T/find";
 
 export default async function consultarSaldo({
   params,
@@ -18,6 +19,7 @@ export default async function consultarSaldo({
     att: {
       operador: "AT&T",
       logo: "/att.png",
+      buscarUsuario: buscarUsuarioAtt,
     },
     movistar: {
       operador: "Movistar",

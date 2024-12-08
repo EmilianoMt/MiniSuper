@@ -39,6 +39,7 @@ export default function FormularioSaldo({
     if (numero !== null) {
       const saldo = await buscarUsuario(Number(numero));
       setSaldo(saldo);
+      console.log(saldo);
       if (saldo === undefined) {
         setAlertVisibleUser(true);
         setTimeout(() => {
