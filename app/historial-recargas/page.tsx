@@ -1,4 +1,8 @@
-import { API_ATT, API_MOVISTAR, API_TELCEL } from "@/actions/Constants/constants";
+import {
+  API_ATT,
+  API_MOVISTAR,
+  API_TELCEL,
+} from "@/actions/Constants/constants";
 import TablaTransacciones from "@/Components/TablaTransacciones";
 import Link from "next/link";
 
@@ -23,7 +27,7 @@ export default async function HistorialRecargas() {
     },
   });
   const responseRecargasAT = await responseRecargasATT.json();
-  
+
   const DatosEstandarizados = (data: any, source: string) => {
     return data.map((item: any) => {
       const monto = item.monto || item.cantidad;
@@ -45,10 +49,13 @@ export default async function HistorialRecargas() {
   const EstandarRecargasM = DatosEstandarizados(responseRecargasM, "Movistar");
   const EstandarRecargasAT = DatosEstandarizados(responseRecargasAT, "AT&T");
 
-  const responseRecargas = EstandarRecargasT.concat(EstandarRecargasM, EstandarRecargasAT);
+  const responseRecargas = EstandarRecargasT.concat(
+    EstandarRecargasM,
+    EstandarRecargasAT
+  );
 
   return (
-    <div className="flex flex-col items-center w-screen h-screen bg-slate-100">
+    <main className="flex flex-col items-center w-screen h-screen bg-slate-100">
       <div className="flex justify-center w-full flex-grow-0 p-8">
         <h1 className="font-kodschasan text-5xl font-bold text-[#7474A0] mb-8">
           Historial de recargas
@@ -57,14 +64,16 @@ export default async function HistorialRecargas() {
       <div className="flex flex-grow-0 w-[90%]">
         <TablaTransacciones transacciones={responseRecargas} />
       </div>
-      <Link href="/" className="flex p-8">
-        <button
-          type="button"
-          className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600"
-        >
-          Regresar
-        </button>
-      </Link>
-    </div>
+      <div className=" flex justify-center bg-slate-100 w-screen">
+        <Link href="/" className="flex p-8">
+          <button
+            type="button"
+            className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600"
+          >
+            Regresar
+          </button>
+        </Link>
+      </div>
+    </main>
   );
 }

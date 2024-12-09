@@ -78,7 +78,7 @@ export default function FormularioRecarga({ logo, operador, hacerRecarga }:{ log
       </h2>
 
       <div className="grid grid-cols-5 gap-6 mb-8">
-        {[20, 50, 100, 200, 500].map((montoOption) => (
+        {[20, 30, 50, 100, 200].map((montoOption) => (
           <button
             key={montoOption}
             onClick={() => handleMontoChange(montoOption)}

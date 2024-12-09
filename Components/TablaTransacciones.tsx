@@ -30,6 +30,13 @@ export default function TablaTransacciones({ transacciones }: TablaTransacciones
     const hora = date.toTimeString().split(' ')[0].substring(0, 5);
     return `${fecha}, ${hora}`;
   };
+  if (transacciones.length === 0) {
+    return (
+      <div className="flex justify-center items-center h-[20vh] w-full">
+        <div className="text-center font-kodschasan text-black text-6xl">No hay transacciones</div>
+      </div>
+    );
+  }
 
   return (
     <Table aria-label="Historial de recargas">
